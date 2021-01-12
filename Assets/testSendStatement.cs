@@ -17,7 +17,7 @@ public class testSendStatement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        lrs = new RemoteLRS("https://demo-xapi.lrs.io/xapi/", "edewis", "efozic");
+        lrs = new RemoteLRS(ConnectionParameters.uri, ConnectionParameters.username, ConnectionParameters.password);
     }
 
     // Update is called once per frame
@@ -32,7 +32,6 @@ public class testSendStatement : MonoBehaviour
     public void SendStatement()
     {
 
-        //Build out Actor details
         Agent actor = new Agent();
         actor.mbox = "mailto:" + _actor.Replace(" ", "") + "@email.com";
         actor.name = _actor;
@@ -45,7 +44,9 @@ public class testSendStatement : MonoBehaviour
 
         //Build out Activity details
         Activity activity = new Activity();
-        activity.id = new Uri("http://www.example.com/" + _definition.Replace(" ", "")).ToString();
+        //activity.id = new Uri("http://www.example.com/" + _definition.Replace(" ", "")).ToString();
+
+        activity.id = new Uri("http://www.example.com/" + this.gameObject.GetInstanceID()).ToString();
 
         //Build out Activity Definition details
         ActivityDefinition activityDefinition = new ActivityDefinition();
@@ -66,6 +67,7 @@ public class testSendStatement : MonoBehaviour
         statement.verb = verb;
         statement.target = activity;
         statement.result = result;
+
 
         //Send the statement
         StatementLRSResponse lrsResponse = lrs.SaveStatement(statement);
