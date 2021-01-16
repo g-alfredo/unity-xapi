@@ -30,6 +30,7 @@ public class retrieveStatements : MonoBehaviour
         Debug.Log(lrsResponse.success);
         Debug.Log(lrsResponse.success);
 
+
         if (lrsResponse.success)
         {
             // List of statements available
