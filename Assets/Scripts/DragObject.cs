@@ -36,4 +36,9 @@ public class DragObject : MonoBehaviour
         transform.position = GetMouseAsWorldPoint() + mOffset;
     }
 
+    private void OnMouseUp()
+    {
+        Statements.sendStatement("http://adlnet.gov/expapi/verbs/interacted","Moved the cube");
+    }
+
 }

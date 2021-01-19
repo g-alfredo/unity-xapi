@@ -13,11 +13,10 @@ public class testSendStatement : MonoBehaviour
     public string _definition;
     public int _value;
     
-    private RemoteLRS lrs;
     // Start is called before the first frame update
     void Start()
     {
-        lrs = new RemoteLRS(ConnectionParameters.uri, ConnectionParameters.username, ConnectionParameters.password);
+        
     }
 
     // Update is called once per frame
@@ -36,19 +35,17 @@ public class testSendStatement : MonoBehaviour
         actor.mbox = "mailto:" + _actor.Replace(" ", "") + "@email.com";
         actor.name = _actor;
 
-        //Build out Verb details
         Verb verb = new Verb();
-        verb.id = new Uri("http://www.example.com/" + _verb.Replace(" ", ""));
+        verb.id = new Uri("http://www.example.com/verbs/"+"attempted");
         verb.display = new LanguageMap();
         verb.display.Add("en-US", _verb);
 
-        //Build out Activity details
         Activity activity = new Activity();
-        //activity.id = new Uri("http://www.example.com/" + _definition.Replace(" ", "")).ToString();
+        activity.id = new Uri("http://www.example.com/" + _definition.Replace(" ", "")).ToString();
 
-        activity.id = new Uri("http://www.example.com/" + this.gameObject.GetInstanceID()).ToString();
+        //activity.id = new Uri("http://www.example.com/" + this.gameObject.GetInstanceID()).ToString();
 
-        //Build out Activity Definition details
+
         ActivityDefinition activityDefinition = new ActivityDefinition();
         activityDefinition.description = new LanguageMap();
         activityDefinition.name = new LanguageMap();
@@ -60,17 +57,29 @@ public class testSendStatement : MonoBehaviour
 
         score.raw = _value;
         result.score = score;
+        Context context = new Context();
+        ContextActivities contActivities = new ContextActivities();
+        List<Activity> activitiesParent = new List<Activity>();
+        Activity actParent = new Activity();
+        ActivityDefinition actDefinition = new ActivityDefinition();
+        LanguageMap actDefMap = new LanguageMap();
+        actDefMap.Add("en", "Attività su unity");
+        actDefinition.name = actDefMap;
+        actParent.definition = actDefinition;
+        actParent.id=new Uri("http://localhost/mod/lti/view.php?id=2").ToString();
+        activitiesParent.Add(actParent);
+        contActivities.parent = activitiesParent;
+        context.contextActivities = contActivities;
 
-        //Build out full Statement details
         Statement statement = new Statement();
         statement.actor = actor;
         statement.verb = verb;
         statement.target = activity;
         statement.result = result;
+        statement.context = context;
 
 
-        //Send the statement
-        StatementLRSResponse lrsResponse = lrs.SaveStatement(statement);
+        StatementLRSResponse lrsResponse = LRSConnectionInitializer.lrs.SaveStatement(statement);
         if (lrsResponse.success) //Success
         {
             Debug.Log("Saving successful! Statement: " + lrsResponse.content.id);
