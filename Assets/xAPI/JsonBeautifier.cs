@@ -9,7 +9,6 @@ public class JsonBeautifier
 
     public static string Beautify(string json) {
         int spaceCounter = 0;
-        string text = "";
         var beautified = new StringBuilder();
         Debug.Log("lunghezza " + json.Length);
 
@@ -19,38 +18,40 @@ public class JsonBeautifier
             if (c.Equals('{')|| c.Equals(','))
             {
                 beautified.Append(c+"\n");
-                text = text+ c+"\n";
                 if (c.Equals('{')){
                     spaceCounter++;
                 }
                 for (int i = 0; i < spaceCounter; i++)
                 {
                     beautified.Append("    ");
-                    text =text+ "    ";
                 }
             }
             else if (c.Equals('}'))
             {
-                beautified.Append("}\n");
-                text =text+ "}\n";
-                spaceCounter--;
-                for (int i = 0; i < spaceCounter; i++)
+                if (counter + 1 == json.Length)
                 {
-                    beautified.Append("    ");
-                    text =text+ "    ";
+                    beautified.AppendLine("\n}\n");
+                }
+                else
+                {
+                    beautified.Append("}\n");
+                    spaceCounter--;
+                    for (int i = 0; i < spaceCounter; i++)
+                    {
+                        beautified.Append("    ");
+                    }
                 }
             }
             else
             {
                 beautified.Append(c);
-                text = text + c;
             }
 
         }
-        Debug.Log("beautified " + beautified.ToString());
-        Debug.Log("testo: " + text);
 
-        return text;
+        Debug.Log("beautified " + beautified.ToString());
+
+        return beautified.ToString();
     }
 
 

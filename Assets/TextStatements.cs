@@ -12,6 +12,8 @@ public class TextStatements : MonoBehaviour
     {
         textUI = this.GetComponent<Text>();
         textUI.text = "";
+        Statements.sendStatement("http://activitystrea.ms/schema/1.0/start", "Started game");
+
     }
 
     // Update is called once per frame

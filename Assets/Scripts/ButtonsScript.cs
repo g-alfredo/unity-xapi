@@ -6,16 +6,18 @@ using UnityEngine.UI;
 public class ButtonsScript : MonoBehaviour
 {
     public Text textUI;
+    public Text yourScoreTextUI;
     public GameObject objectAnimated;
     // Start is called before the first frame update
     void Start()
     {
         textUI.text = "";
+        yourScoreTextUI.text="";
 
-    }
+}
 
-    // Update is called once per frame
-    void Update()
+// Update is called once per frame
+void Update()
     {
 
     }
@@ -35,7 +37,8 @@ public class ButtonsScript : MonoBehaviour
         Debug.Log("Punteggio random: "+score);
         Statements.sendStatement("http://adlnet.gov/expapi/verbs/scored", "Received score", score);
         List<string> bestScoreList = retrieveBestScores.retrieveScoreList();
-        string text = "Points: " + score+"\n\n";
+        yourScoreTextUI.text = "Your points: " + score;
+        string text = "";
         for(int i = 0; i < 5; i++)
         {
             text += bestScoreList[i] + "\n";

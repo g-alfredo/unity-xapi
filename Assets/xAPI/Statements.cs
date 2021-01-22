@@ -33,11 +33,26 @@ public class Statements
         activityDefinition.name.Add("en", UserInfo.activityDefinition);
         activity.definition = activityDefinition;
 
+        Context context = new Context();
+        ContextActivities contActivities = new ContextActivities();
+        context.contextActivities = contActivities;
+        Activity parentActivity = new Activity();
+        parentActivity.id = UserInfo.parentActivityID;
+        ActivityDefinition parentActivityDef = new ActivityDefinition();
+        LanguageMap language = new LanguageMap();
+        language.Add("en", "Grafica ed Interattività");
+        parentActivityDef.name = language;
+        parentActivity.definition = parentActivityDef;
+        List<Activity> activitiesParent = new List<Activity>();
+        activitiesParent.Add(parentActivity);
+        contActivities.parent = activitiesParent;
+
 
         Statement statement = new Statement();
         statement.actor = actor;
         statement.verb = verb;
         statement.target = activity;
+        statement.context = context;
 
 
         StatementLRSResponse lrsResponse = LRSConnectionInitializer.lrs.SaveStatement(statement);
@@ -82,15 +97,31 @@ public class Statements
         Result result = new Result();
         Score score = new Score();
 
+        score.scaled = scoreValue/100;
         score.raw = scoreValue;
         result.score = score;
-        
+
+
+        Context context = new Context();
+        ContextActivities contActivities = new ContextActivities();
+        context.contextActivities = contActivities;
+        Activity parentActivity = new Activity();
+        parentActivity.id = UserInfo.parentActivityID;
+        ActivityDefinition parentActivityDef = new ActivityDefinition();
+        LanguageMap language = new LanguageMap();
+        language.Add("en", "Grafica ed Interattività");
+        parentActivityDef.name = language;
+        parentActivity.definition = parentActivityDef;
+        List<Activity> activitiesParent = new List<Activity>();
+        activitiesParent.Add(parentActivity);
+        contActivities.parent = activitiesParent;
 
         Statement statement = new Statement();
         statement.actor = actor;
         statement.verb = verb;
         statement.target = activity;
         statement.result = result;
+        statement.context = context;
 
 
         StatementLRSResponse lrsResponse = LRSConnectionInitializer.lrs.SaveStatement(statement);

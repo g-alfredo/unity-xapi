@@ -30,7 +30,6 @@ public class StartupScript : MonoBehaviour
 
 
 
-
     }
 
     // Update is called once per frame

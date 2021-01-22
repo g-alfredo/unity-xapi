@@ -17,7 +17,7 @@ public class AnimationEventFunctions : MonoBehaviour
     {
 
         Debug.Log("Finita la traslazione");
-        Statements.sendStatement("http://id.tincanapi.com/verb/viewed", "See the translation");
+        Statements.sendStatement("http://adlnet.gov/expapi/verbs/experienced", "See the translation");
     }
 
     public void inizioRotazione()
@@ -28,7 +28,7 @@ public class AnimationEventFunctions : MonoBehaviour
     public void fineRotazione()
     {
         Debug.Log("Finita la rotazione");
-        Statements.sendStatement("http://id.tincanapi.com/verb/viewed", "See the rotation");
+        Statements.sendStatement("http://adlnet.gov/expapi/verbs/experienced", "See the rotation");
 
     }
 
