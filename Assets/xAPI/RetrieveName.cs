@@ -15,10 +15,9 @@ public class RetrieveName
         Agent actor = new Agent();
         actor.mbox = "mailto:" + email;
         query.agent = actor;
-        query.limit = 100;
-
+        query.limit = 1;
         StatementsResultLRSResponse lrsResponse = LRSConnectionInitializer.lrs.QueryStatements(query);
-    Debug.Log(lrsResponse.success);
+        Debug.Log(lrsResponse.success);
         string name = "";
         Debug.Log("name " + name);
 
@@ -29,18 +28,23 @@ public class RetrieveName
             Debug.Log("RetrieveName statements: " + lrsResponse.content.statements.Count);
             List<Statement> statements = lrsResponse.content.statements;
             statements.RemoveAll(item => item.actor.name == null);
-            if (statements.Count > 0) {
+            if (statements.Count > 0)
+            {
                 name = statements[0].actor.name;
 
                 //Cambia scena
                 SceneManager.LoadScene("MainScene");
             }
-
+            else { 
+                ErrorTextScript.showError();
+                Debug.Log("Errore lanciato");
+            }
         }
         else
         {
             Debug.Log("RetrieveName failed");
             // Do something with failure
+            ErrorTextScript.showError();
 
         }
         Debug.Log("name " + name);

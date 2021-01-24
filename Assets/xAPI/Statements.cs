@@ -34,6 +34,7 @@ public class Statements
         activity.definition = activityDefinition;
 
         Context context = new Context();
+        context.platform = "Unity";
         ContextActivities contActivities = new ContextActivities();
         context.contextActivities = contActivities;
         Activity parentActivity = new Activity();
@@ -96,13 +97,18 @@ public class Statements
         activity.definition = activityDefinition;
         Result result = new Result();
         Score score = new Score();
-
-        score.scaled = scoreValue/100;
+        score.min = 0;
+        score.max = 100;
+        double scoreV = ((float)scoreValue) / 100;
+        score.scaled = Math.Round(scoreV, 2);
         score.raw = scoreValue;
         result.score = score;
+        result.completion = true;
+        result.success = scoreValue > 50 ? true : false;
 
 
         Context context = new Context();
+        context.platform = "Unity";
         ContextActivities contActivities = new ContextActivities();
         context.contextActivities = contActivities;
         Activity parentActivity = new Activity();
